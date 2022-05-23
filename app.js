@@ -46,4 +46,16 @@ app.put("/employees/:id", (req, res) => {
     res.json({message: "success"});
 
 });
+app.delete("/employees/:id", (req, res) => {
+    let _id = req.params.id
+    console.log(_id)
+    let employees = fs.readFileSync("employees")
+    employees = JSON.parse(employees)
+    let storg = employees.filter(employee => employee.id != _id)
+    console.log(storg)
+    employees = []
+    employees = JSON.stringify(storg)
+    fs.writeFileSync("employees", employees)
+    res.json({ message: "Employee Deleted Success"})
+})
 app.listen(3000, () => console.log("running"))
